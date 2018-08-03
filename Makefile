@@ -15,14 +15,12 @@ options:
 	@echo "CC       = ${CC}"
 
 .c.o:
-	@echo CC $<
-	@${CC} -c ${CFLAGS} $<
+	${CC} -c ${CFLAGS} $<
 
 ${OBJ}: config.mk
 
 bgs: ${OBJ}
-	@echo CC -o $@
-	@${CC} -o $@ ${OBJ} ${LDFLAGS}
+	${CC} -o $@ ${OBJ} ${LDFLAGS}
 
 clean:
 	@echo cleaning

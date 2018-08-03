@@ -83,21 +83,23 @@ drawbg(void) {
 		imlib_context_set_image(buffer);
 		switch(mode) {
 		case ModeCenter:
-			nw = (monitors[i].w - w) / 2;
-			nh = (monitors[i].h - h) / 2;
-			nx = monitors[i].x + (monitors[i].w - nw) / 2;
-			ny = monitors[i].y + (monitors[i].h - nh) / 2;
+			nw = w;
+			nh = h;
+			nx = (monitors[i].w - w) / 2;
+			ny = (monitors[i].h - h) / 2;
 			break;
 		case ModeZoom:
-			nw = monitors[i].w;
-			nh = monitors[i].h;
-			if(w > h && (w / h > (monitors[i].w / monitors[i].h))) {
+			if(((float)w / h) > ((float)monitors[i].w / monitors[i].h)) {
+				nh = monitors[i].h;
+				nw = nh * w / h;
 				nx = monitors[i].x + (monitors[i].w - nw) / 2;
-				ny = monitors[i].y + (int)ceil(h * nx / w) / 2;
+				ny = monitors[i].y;
 			}
 			else {
+				nw = monitors[i].w;
+				nh = nw * h / w;
 				ny = monitors[i].y + (monitors[i].h - nh) / 2;
-				nx = monitors[i].x + (int)ceil(w * ny / h) / 2;
+				nx = monitors[i].x;
 			}
 			break;
 		default: /* ModeScale */
